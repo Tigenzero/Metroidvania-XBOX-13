@@ -32,6 +32,10 @@ public class PlayerController : MonoBehaviour
     
     private float dashRechargeCounter;
 
+    public float dashRange;
+
+    public LayerMask whatIsDashDestructible;
+
 
     private PlayerAbilityTracker abilities;
 
@@ -40,6 +44,15 @@ public class PlayerController : MonoBehaviour
     public BulletController shotToFire;
     public Transform ShotPoint;
     
+    // Ball Mode
+    public GameObject standing, ball;
+    public float waitToBall;
+    private float ballCounter;
+    public Animator ballAnim;
+
+    // Ball Bomb
+    public Transform bombPoint;
+    public GameObject bomb;
     
 
     // Start is called before the first frame update
@@ -55,7 +68,7 @@ public class PlayerController : MonoBehaviour
     	if (dashRechargeCounter > 0) {
     		dashRechargeCounter -= Time.deltaTime;
     	} else {
-    		if (Input.GetButtonDown("Fire2") && abilities.canDash) {
+    		if (Input.GetButtonDown("Fire2") && standing.activeSelf && abilities.canDash) {
             dashCounter = dashTime;
 
             ShowAfterImage();
@@ -74,6 +87,15 @@ public class PlayerController : MonoBehaviour
             }
             
             dashRechargeCounter = waitAfterDashing;
+
+            Collider2D[] objectsToRemove = Physics2D.OverlapCircleAll(transform.position, dashRange, whatIsDashDestructible);
+
+            if (objectsToRemove.Length > 0) {
+                foreach (Collider2D item in objectsToRemove)
+                {
+                    Destroy(item.gameObject);
+                }
+            }
         }
         else {
             moveCharacter(Input.GetAxisRaw("Horizontal"));
@@ -99,15 +121,55 @@ public class PlayerController : MonoBehaviour
 
 
         if (Input.GetButtonDown("Fire1")) {
-            Instantiate(shotToFire, ShotPoint.position, ShotPoint.rotation).moveDir = new Vector2(transform.localScale.x, 0f);
-            anim.SetTrigger("shotFired");
+            if (standing.activeSelf)
+            {
+                Instantiate(shotToFire, ShotPoint.position, ShotPoint.rotation).moveDir = new Vector2(transform.localScale.x, 0f);
+                anim.SetTrigger("shotFired");
+            } else if(ball.activeSelf)
+            {
+                Instantiate(bomb, bombPoint.position, bombPoint.rotation);
+            }
+            
+        }
+
+
+        // ball mode
+        if (!ball.activeSelf) {
+            //Are we pressing down?
+            if (Input.GetAxisRaw("Vertical") < -.9f) {
+                ballCounter -= Time.deltaTime;
+                if (ballCounter <= 0) {
+                    ball.SetActive(true);
+                    standing.SetActive(false);
+                }
+            } else {
+                ballCounter = waitToBall;
+            }
+        } else {
+            //Are we pressing up?
+            if (Input.GetAxisRaw("Vertical") > .9f) {
+                ballCounter -= Time.deltaTime;
+                if (ballCounter <= 0) {
+                    ball.SetActive(false);
+                    standing.SetActive(true);
+                }
+            } else {
+                ballCounter = waitToBall;
+            }
         }
 
 
 
         // Set Animation params
-        anim.SetBool("isOnGround", isOnGround);
-        anim.SetFloat("speed", Mathf.Abs( theRB.velocity.x));
+        if (standing.activeSelf) {
+            anim.SetBool("isOnGround", isOnGround);
+            anim.SetFloat("speed", Mathf.Abs( theRB.velocity.x));
+        }
+
+        if (ball.activeSelf) {
+            ballAnim.SetFloat("speed", Mathf.Abs(theRB.velocity.x));
+        }
+        
 
 
     }
