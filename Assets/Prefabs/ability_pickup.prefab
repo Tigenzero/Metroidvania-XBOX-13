@@ -61,7 +61,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &4711203071637845684
 MonoBehaviour:
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 695.5945, y: 359.4458, z: 702.25073, w: 369.4305}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -276,7 +276,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 4651472796450862913, guid: 08f737e43c2490a44a8c91d96748b5af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -336,10 +336,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e20d0a3b0bd4a475991c593598721a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlockDoubleJump: 1
-  unlockDash: 0
+  unlockDoubleJump: 0
+  unlockDash: 1
   pickupEffect: {fileID: 154645555206289247, guid: 871c8649f250b4c0e81ff8ad636c888d, type: 3}
-  unlockMessage: ALL ABILITIES UNLOCKED!!
+  unlockMessage: DOUBLE JUMP UNLOCKED!
   unlockText: {fileID: 4711203072376965074}
 --- !u!1 &4711203072376965084
 GameObject:
