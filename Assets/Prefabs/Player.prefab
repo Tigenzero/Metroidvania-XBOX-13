@@ -376,6 +376,7 @@ MonoBehaviour:
   ballAnim: {fileID: 713909890492557134}
   bombPoint: {fileID: 713909889894020163}
   bomb: {fileID: 6930434910226762140, guid: 7fd4791679fa04343ac4567e680afe16, type: 3}
+  canMove: 0
 --- !u!114 &713909890720666647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,6 +405,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentHealth: 0
   maxHealth: 10
+  invincibilityLength: 1.5
+  flashLength: 0.08
+  playerSprites:
+  - {fileID: 713909890399863003}
+  - {fileID: 713909890492557136}
 --- !u!1 &713909890876896176
 GameObject:
   m_ObjectHideFlags: 0
