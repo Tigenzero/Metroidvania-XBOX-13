@@ -36,8 +36,6 @@ public class PlayerHealthController : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-
-        UIController.instance.UpdateHealth(currentHealth, maxHealth);
     }
 
     // Update is called once per frame
@@ -74,10 +72,14 @@ public class PlayerHealthController : MonoBehaviour
                 // gameObject.SetActive(false);
 
                 RespawnController.instance.Respawn();
+
+                AudioManager.instance.PlaySFX(8);
             }
             // Not dead? Temp Invincibility
             else {
                 invincCounter = invincibilityLength;
+
+                AudioManager.instance.PlaySFXAdjusted(11);
             }
 
             UIController.instance.UpdateHealth(currentHealth, maxHealth);

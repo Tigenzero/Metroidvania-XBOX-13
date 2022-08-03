@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
@@ -20,10 +21,17 @@ public class UIController : MonoBehaviour
     public float fadeSpeed = 2f;
     private bool fadingToBlack, fadingFromBlack;
 
+    public string mainMenuScene;
+
+    public GameObject pauseScreen;
+
     // Start is called before the first frame update
     void Start()
     {
         canvas.enabled = true;
+        // BUG: PlayerHealthController isn't setup at this point. If enabled, player starts with an empty health bar. If disabled, player starts with full health bar.
+        // TODO: Store current/max health in playerprefs so we can properly update this and keep track between sessions.
+    //    UpdateHealth(PlayerHealthController.instance.currentHealth, PlayerHealthController.instance.maxHealth);
     }
 
     // Update is called once per frame
@@ -39,6 +47,10 @@ public class UIController : MonoBehaviour
             if (fadeScreen.color.a == 0f) {
                 fadingFromBlack = false;
             }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape)){
+            PauseUnpause();
         }
     }
 
@@ -56,5 +68,32 @@ public class UIController : MonoBehaviour
         fadingFromBlack = true;
         fadingToBlack = false;
 
+    }
+
+    public void PauseUnpause() {
+        if(!pauseScreen.activeSelf){
+            pauseScreen.SetActive(true);
+
+            Time.timeScale = 0f;
+        } else {
+            pauseScreen.SetActive(false);
+
+            Time.timeScale = 1f;
+        }
+    }
+
+    public void GoToMainMenu(){
+        Destroy(PlayerHealthController.instance.gameObject);
+        PlayerHealthController.instance = null;
+
+        Destroy(RespawnController.instance.gameObject);
+        RespawnController.instance = null;
+        
+        instance = null;
+        Destroy(gameObject);
+
+        Time.timeScale = 1f;
+
+        SceneManager.LoadScene(mainMenuScene);
     }
 }

@@ -23,11 +23,15 @@ public class AbilityUnlock : MonoBehaviour
             if (unlockDoubleJump)
             {
                 player.canDoubleJump = true;
+
+                SaveUnlockedAbility("DoubleJump");
             }
 
             if (unlockDash)
             {
                 player.canDash = true;
+
+                SaveUnlockedAbility("Dash");
             }
 
             Instantiate(pickupEffect, transform.position, transform.rotation);
@@ -41,6 +45,12 @@ public class AbilityUnlock : MonoBehaviour
             Destroy(unlockText.transform.parent.gameObject, 5f);
 
             Destroy(gameObject);
+
+            AudioManager.instance.PlaySFX(5);
         }
+    }
+
+    private void SaveUnlockedAbility(string ability) {
+        PlayerPrefs.SetInt(ability + "Unlocked", 1);
     }
 }
