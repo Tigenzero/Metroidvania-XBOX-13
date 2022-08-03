@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theRB: {fileID: 713909890720666648}
-  moveSpeed: 8
+  moveSpeed: 15
   jumpForce: 20
   groundPoint: {fileID: 713909891129703543}
   whatIsGround:
@@ -377,6 +377,7 @@ MonoBehaviour:
   bombPoint: {fileID: 713909889894020163}
   bomb: {fileID: 6930434910226762140, guid: 7fd4791679fa04343ac4567e680afe16, type: 3}
   canMove: 0
+  timeInvisible: 2
 --- !u!114 &713909890720666647
 MonoBehaviour:
   m_ObjectHideFlags: 0

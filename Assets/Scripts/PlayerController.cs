@@ -56,18 +56,32 @@ public class PlayerController : MonoBehaviour
 
     public bool canMove;
     
+    // Time invisible
+    public float timeInvisible;
+    private float invisibleCount;
 
     // Start is called before the first frame update
     void Start()
     {
         abilities = GetComponent<PlayerAbilityTracker>();
         canMove = true;
+        invisibleCount = timeInvisible;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (canMove) {
+        // Kill if invisible
+        if (!theSR.isVisible) {
+            if (invisibleCount <= 0){
+                PlayerHealthController.instance.DamagePlayer(PlayerHealthController.instance.maxHealth);
+            }
+            invisibleCount -= Time.deltaTime;
+        } else {
+            invisibleCount = timeInvisible;
+        }
+        // Dash
+        if (canMove && Time.timeScale != 0) {
     
             if (dashRechargeCounter > 0) {
                 dashRechargeCounter -= Time.deltaTime;
@@ -76,6 +90,8 @@ public class PlayerController : MonoBehaviour
                 dashCounter = dashTime;
 
                 ShowAfterImage();
+
+                AudioManager.instance.PlaySFXAdjusted(7);
                 }
             }
 
@@ -115,9 +131,13 @@ public class PlayerController : MonoBehaviour
             if(Input.GetButtonDown("Jump") && (isOnGround || (canDoubleJump && abilities.canDoubleJump))) {
                 if (isOnGround) {
                     canDoubleJump = true;
+
+                    AudioManager.instance.PlaySFXAdjusted(12);
                 } else {
                     canDoubleJump = false;
                     anim.SetTrigger("doubleJump");
+
+                    AudioManager.instance.PlaySFXAdjusted(9);
                 }
                 theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
             }
@@ -129,9 +149,13 @@ public class PlayerController : MonoBehaviour
                 {
                     Instantiate(shotToFire, ShotPoint.position, ShotPoint.rotation).moveDir = new Vector2(transform.localScale.x, 0f);
                     anim.SetTrigger("shotFired");
+
+                    AudioManager.instance.PlaySFXAdjusted(14);
                 } else if(ball.activeSelf)
                 {
                     Instantiate(bomb, bombPoint.position, bombPoint.rotation);
+
+                    AudioManager.instance.PlaySFXAdjusted(13);
                 }
                 
             }
@@ -145,6 +169,8 @@ public class PlayerController : MonoBehaviour
                     if (ballCounter <= 0) {
                         ball.SetActive(true);
                         standing.SetActive(false);
+
+                        AudioManager.instance.PlaySFX(6);
                     }
                 } else {
                     ballCounter = waitToBall;
@@ -156,6 +182,8 @@ public class PlayerController : MonoBehaviour
                     if (ballCounter <= 0) {
                         ball.SetActive(false);
                         standing.SetActive(true);
+
+                        AudioManager.instance.PlaySFX(10);
                     }
                 } else {
                     ballCounter = waitToBall;
