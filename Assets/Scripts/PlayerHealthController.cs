@@ -32,10 +32,13 @@ public class PlayerHealthController : MonoBehaviour
 
     public SpriteRenderer[] playerSprites;
 
+    private bool isDead;
+
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
+        isDead = false;
     }
 
     // Update is called once per frame
@@ -66,17 +69,21 @@ public class PlayerHealthController : MonoBehaviour
             currentHealth -= damageAmount;
 
             // Death
-            if(currentHealth <= 0) {
+            if(currentHealth <= 0 && !isDead) {
                 currentHealth = 0;
 
-                // gameObject.SetActive(false);
+                gameObject.GetComponent<HeroinePlayerController>().killPlayer();
+                isDead = true;
 
+                // gameObject.SetActive(false);
+                
                 RespawnController.instance.Respawn();
 
                 AudioManager.instance.PlaySFX(8);
             }
             // Not dead? Temp Invincibility
             else {
+                gameObject.GetComponent<HeroinePlayerController>().hurtPlayer();
                 invincCounter = invincibilityLength;
 
                 AudioManager.instance.PlaySFXAdjusted(11);
@@ -89,6 +96,7 @@ public class PlayerHealthController : MonoBehaviour
     public void FillHealth(){
         currentHealth = maxHealth;
         UIController.instance.UpdateHealth(currentHealth, maxHealth);
+        isDead = false;
     }
 
     public void HealPlayer(int healAmount) {
