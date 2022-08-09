@@ -36212,7 +36212,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3925201871140389890}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.78, y: -5, z: 0}
+  m_LocalPosition: {x: 0, y: -5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -36256,7 +36256,7 @@ GameObject:
   - component: {fileID: 3925201871140389889}
   - component: {fileID: 3925201871140389903}
   - component: {fileID: 4580529214504893829}
-  - component: {fileID: 4580529214504893828}
+  - component: {fileID: 4580529214504893830}
   - component: {fileID: 4580529214504893827}
   m_Layer: 8
   m_Name: Heroine
@@ -36457,25 +36457,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  maxHealth: 1
+  maxHealth: 10
   invincibilityLength: 1.5
   flashLength: 0.08
   playerSprites:
   - {fileID: 3925201871490420930}
-  playerSprite: {fileID: 3925201871490420930}
---- !u!114 &4580529214504893828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3925201871140389890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dfa06cb129e44643abae19bc9ddbf06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canDash: 1
 --- !u!114 &4580529214504893829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36501,20 +36487,34 @@ MonoBehaviour:
   cutBlob: {fileID: 8236765270683292906}
   attackTime: 0.25
   dashSpeed: 40
-  dashTime: 0.2
+  dashTime: 0.3
   theSR: {fileID: 3925201871490420930}
-  afterImage: {fileID: 0}
+  afterImage: {fileID: 3925201871490420930}
   afterImageLifetime: 0.5
   timeBetweenAfterImages: 0.03
   afterImageColor: {r: 0.4339623, g: 0, b: 0, a: 0}
   waitAfterDashing: 0.5
-  dashRange: 0.75
+  dashRange: 1
   whatIsDashDestructible:
     serializedVersion: 2
     m_Bits: 2048
   hurtTime: 0.5
   standing: {fileID: 3925201871490420933}
   canMove: 0
+--- !u!114 &4580529214504893830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3925201871140389890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf4a276b031b646b8bc7923033efc863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canDoubleJump: 0
+  canDash: 0
 --- !u!95 &7727305191771584104
 Animator:
   serializedVersion: 4

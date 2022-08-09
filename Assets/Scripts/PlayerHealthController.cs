@@ -82,7 +82,7 @@ public class PlayerHealthController : MonoBehaviour
                 AudioManager.instance.PlaySFX(8);
             }
             // Not dead? Temp Invincibility
-            else {
+            else if(!isDead){
                 gameObject.GetComponent<HeroinePlayerController>().hurtPlayer();
                 invincCounter = invincibilityLength;
 
