@@ -116,8 +116,8 @@ public class HeroinePlayerController : MonoBehaviour, PlayerControllerInterface
             jumpButtonPressedTime = Time.time;
         }
 
-        // If character is hurt, do not jump or attack
-        if (!isPlayerHurt())
+        // If character is hurt or attacking, do not jump or attack
+        if (!isPlayerHurt() && !isPlayerAttacking())
         {
             jump();
             attack();
@@ -223,12 +223,12 @@ public class HeroinePlayerController : MonoBehaviour, PlayerControllerInterface
 
     private bool updateAttacking()
     {
-        if (!isPlayerHurt())
+        if (!isPlayerAttacking())
         {
             return false;
         }
         attackCounter = attackCounter - Time.deltaTime;
-        if (!isPlayerHurt())
+        if (!isPlayerAttacking())
         {
             attackCounter = 0;
             cutBlob.SetActive(false);
@@ -290,9 +290,14 @@ public class HeroinePlayerController : MonoBehaviour, PlayerControllerInterface
         theRB.velocity = Vector2.zero;
     }
 
-    bool isPlayerHurt()
+    bool isPlayerAttacking()
     {
         return attackCounter > 0;
+    }
+
+    bool isPlayerHurt()
+    {
+        return hurtCounter > 0;
     }
 
     public void killPlayer()
