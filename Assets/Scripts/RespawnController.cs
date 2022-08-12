@@ -58,9 +58,9 @@ public class RespawnController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         thePlayer.transform.position = respawnPoint;
         thePlayer.SetActive(true);
-        thePlayer.GetComponent<HeroinePlayerController>().revivePlayer();
+        thePlayer.GetComponent<PlayerControllerInterface>().revivePlayer();
         PlayerHealthController.instance.FillHealth();
-        thePlayer.GetComponent<HeroinePlayerController>().anim.SetTrigger("isUp");
+        thePlayer.GetComponent<PlayerControllerInterface>().setAnimationTrigger("isUp");
         
     }
 }

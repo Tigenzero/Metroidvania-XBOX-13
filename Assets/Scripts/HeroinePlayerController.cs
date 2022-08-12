@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HeroinePlayerController : MonoBehaviour
+public class HeroinePlayerController : MonoBehaviour, PlayerControllerInterface
 {
     public Rigidbody2D theRB;
 
@@ -12,6 +12,11 @@ public class HeroinePlayerController : MonoBehaviour
     public Transform groundPoint;
     private bool isOnGround;
     private bool canDoubleJump;
+
+    public float jumpButtonGracePeriod;
+
+    private float? lastGroundedTime;
+    private float? jumpButtonPressedTime;
     public LayerMask whatIsGround;
 
     public Animator anim;
@@ -84,124 +89,39 @@ public class HeroinePlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Dash
-        if (canMove && Time.timeScale != 0 && !isDead)
-        {
-
-            if (dashRechargeCounter > 0)
-            {
-                dashRechargeCounter -= Time.deltaTime;
-            }
-            else
-            {
-                if (Input.GetButtonDown("Fire2") && abilities.canDash)
-                {
-                    dashCounter = dashTime;
-                    anim.SetTrigger("dashing");
-
-                    // ShowAfterImage();
-
-                    AudioManager.instance.PlaySFXAdjusted(7);
-                }
-            }
-
-            // The "player cannot move" conditions
-            // Player is Dashing
-            if (dashCounter > 0)
-            {
-                dashCounter = dashCounter - Time.deltaTime;
-
-                theRB.velocity = new Vector2(dashSpeed * transform.localScale.x, theRB.velocity.y);
-
-                // afterImageCounter -= Time.deltaTime;
-                // if (afterImageCounter <= 0) {
-                //     ShowAfterImage();
-                // }
-
-                dashRechargeCounter = waitAfterDashing;
-
-                Collider2D[] objectsToRemove = Physics2D.OverlapCircleAll(transform.position, dashRange, whatIsDashDestructible);
-
-                if (objectsToRemove.Length > 0)
-                {
-                    foreach (Collider2D item in objectsToRemove)
-                    {
-                        Destroy(item.gameObject);
-                    }
-                }
-
-                //TODO: Add enemy damage
-            }
-            // Player is attacking
-            else if (attackCounter > 0)
-            {
-                attackCounter = attackCounter - Time.deltaTime;
-                if (attackCounter <= 0)
-                {
-                    attackCounter = 0;
-                    cutBlob.SetActive(false);
-                }
-            }
-            // Player is hurt
-            else if (hurtCounter > 0)
-            {
-                hurtCounter -= Time.deltaTime;
-                if (hurtCounter <= 0)
-                {
-                    hurtCounter = 0;
-                    Debug.Log("Player No Longer Hurt, setting isUp.");
-                    anim.SetTrigger("isUp");
-                }
-            }
-            else
-            {
-                moveCharacter(Input.GetAxisRaw("Horizontal"));
-            }
-
-
-
-            // Am I on the Ground?
-            isOnGround = Physics2D.OverlapCircle(groundPoint.position, .2f, whatIsGround);
-
-            // If character is hurt, do not jump or attack
-            if (hurtCounter <= 0)
-            {
-
-                // Jumping
-                if (Input.GetButtonDown("Jump") && isOnGround && attackCounter == 0)
-                {
-                    AudioManager.instance.PlaySFXAdjusted(12);
-                    theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
-                }
-
-
-
-                if (Input.GetButtonDown("Fire1") && attackCounter == 0)
-                {
-                    cutBlob.SetActive(true);
-                    // Instantiate(attackController, swordAttackPoint.position, swordAttackPoint.rotation);
-                    anim.SetTrigger("attacking");
-                    attackCounter = attackTime;
-
-                    // Instantiate(shotToFire, ShotPoint.position, ShotPoint.rotation).moveDir = new Vector2(transform.localScale.x, 0f);
-                    // anim.SetTrigger("shotFired");
-
-                    AudioManager.instance.PlaySFXAdjusted(14);
-
-                    if (Mathf.Abs(theRB.velocity.y) < 0.1)
-                    {
-                        theRB.velocity = new Vector2(0, 0);
-                    }
-                }
-
-            }
-
-        }
-        else
+        if (!canMove || Time.timeScale == 0 || isDead)
         {
             theRB.velocity = Vector2.zero;
+            return;
+        }
+        
+        dash();
+
+        // If the player isn't dashing, attacking, or busy being hurt, the character can be moved.
+        if (!updateDash() && !updateAttacking() && !updatePlayerHurt())
+        {
+            moveCharacter(Input.GetAxisRaw("Horizontal"));
         }
 
+        // Am I on the Ground?
+        isOnGround = Physics2D.OverlapCircle(groundPoint.position, .2f, whatIsGround);
+
+        if (isOnGround)
+        {
+            lastGroundedTime = Time.time;
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            jumpButtonPressedTime = Time.time;
+        }
+
+        // If character is hurt, do not jump or attack
+        if (!isPlayerHurt())
+        {
+            jump();
+            attack();
+        }
 
 
         // Set Animation params
@@ -229,6 +149,127 @@ public class HeroinePlayerController : MonoBehaviour
         }
     }
 
+    private void dash() {
+        // Dash
+        if (dashRechargeCounter > 0)
+        {
+            dashRechargeCounter -= Time.deltaTime;
+        }
+        else
+        {
+            if (Input.GetButtonDown("Fire2") && abilities.canDash)
+            {
+                dashCounter = dashTime;
+                anim.SetTrigger("dashing");
+
+                // ShowAfterImage();
+
+                AudioManager.instance.PlaySFXAdjusted(7);
+            }
+        }
+    }
+
+    private void jump()
+    {
+        // Jumping
+        // was the "jump" button pressed, the character was on the ground, or the character isn't attacking?
+        if (Time.time - jumpButtonPressedTime <= jumpButtonGracePeriod && Time.time - lastGroundedTime <= jumpButtonGracePeriod && attackCounter == 0)
+        {
+            AudioManager.instance.PlaySFXAdjusted(12);
+            theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
+            jumpButtonPressedTime = null;
+            lastGroundedTime = null;
+        }
+    }
+
+    private void attack()
+    {
+        if (Input.GetButtonDown("Fire1") && attackCounter == 0)
+        {
+            cutBlob.SetActive(true);
+            // Instantiate(attackController, swordAttackPoint.position, swordAttackPoint.rotation);
+            anim.SetTrigger("attacking");
+            attackCounter = attackTime;
+
+            // Instantiate(shotToFire, ShotPoint.position, ShotPoint.rotation).moveDir = new Vector2(transform.localScale.x, 0f);
+            // anim.SetTrigger("shotFired");
+
+            AudioManager.instance.PlaySFXAdjusted(14);
+
+            if (Mathf.Abs(theRB.velocity.y) < 0.1)
+            {
+                theRB.velocity = new Vector2(0, 0);
+            }
+        }
+    }
+
+    private bool updatePlayerHurt()
+    {
+
+        if (hurtCounter <= 0)
+        {
+            return false;
+        }
+        hurtCounter -= Time.deltaTime;
+        if (hurtCounter <= 0)
+        {
+            hurtCounter = 0;
+            Debug.Log("Player No Longer Hurt, setting isUp.");
+            anim.SetTrigger("isUp");
+        }
+        return true;
+
+    }
+
+    private bool updateAttacking()
+    {
+        if (!isPlayerHurt())
+        {
+            return false;
+        }
+        attackCounter = attackCounter - Time.deltaTime;
+        if (!isPlayerHurt())
+        {
+            attackCounter = 0;
+            cutBlob.SetActive(false);
+        }
+        return true;
+    }
+
+    private bool updateDash()
+    {
+        if (dashCounter <= 0)
+        {
+            return false;
+        }
+        // The "player cannot move" conditions
+        // Player is Dashing
+
+        dashCounter = dashCounter - Time.deltaTime;
+
+        theRB.velocity = new Vector2(dashSpeed * transform.localScale.x, theRB.velocity.y);
+
+        // afterImageCounter -= Time.deltaTime;
+        // if (afterImageCounter <= 0) {
+        //     ShowAfterImage();
+        // }
+
+        dashRechargeCounter = waitAfterDashing;
+
+        Collider2D[] objectsToRemove = Physics2D.OverlapCircleAll(transform.position, dashRange, whatIsDashDestructible);
+
+        if (objectsToRemove.Length > 0)
+        {
+            foreach (Collider2D item in objectsToRemove)
+            {
+                Destroy(item.gameObject);
+            }
+        }
+
+        //TODO: Add enemy damage
+        return true;
+    }
+
 
     public void ShowAfterImage()
     {
@@ -249,6 +290,11 @@ public class HeroinePlayerController : MonoBehaviour
         theRB.velocity = Vector2.zero;
     }
 
+    bool isPlayerHurt()
+    {
+        return attackCounter > 0;
+    }
+
     public void killPlayer()
     {
         anim.SetTrigger("isDead");
@@ -259,5 +305,10 @@ public class HeroinePlayerController : MonoBehaviour
     public void revivePlayer()
     {
         isDead = false;
+    }
+
+    public void setAnimationTrigger(string trigger)
+    {
+        anim.SetTrigger(trigger);
     }
 }

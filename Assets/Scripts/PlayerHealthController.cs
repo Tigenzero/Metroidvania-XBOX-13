@@ -72,7 +72,8 @@ public class PlayerHealthController : MonoBehaviour
             if(currentHealth <= 0 && !isDead) {
                 currentHealth = 0;
 
-                gameObject.GetComponent<HeroinePlayerController>().killPlayer();
+                // gameObject.GetComponent<HeroinePlayerController>().killPlayer();
+                gameObject.GetComponent<PlayerControllerInterface>().killPlayer();
                 isDead = true;
 
                 // gameObject.SetActive(false);
@@ -83,7 +84,8 @@ public class PlayerHealthController : MonoBehaviour
             }
             // Not dead? Temp Invincibility
             else if(!isDead){
-                gameObject.GetComponent<HeroinePlayerController>().hurtPlayer();
+                // gameObject.GetComponent<HeroinePlayerController>().hurtPlayer();
+                gameObject.GetComponent<PlayerControllerInterface>().hurtPlayer();
                 invincCounter = invincibilityLength;
 
                 AudioManager.instance.PlaySFXAdjusted(11);
