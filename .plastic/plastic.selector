@@ -1,4 +1,0 @@
-repository "Metroidvania@XBOX_Team_13@cloud"
-  path "/"
-    smartbranch "/main"    
-     

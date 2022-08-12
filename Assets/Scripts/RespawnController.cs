@@ -19,6 +19,8 @@ public class RespawnController : MonoBehaviour
 
     public GameObject deathEffect;
 
+    public float deathTimeScale;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,16 +45,22 @@ public class RespawnController : MonoBehaviour
     }
 
     IEnumerator RespawnCo() {
-        thePlayer.SetActive(false);
-        if (deathEffect != null) {
-            Instantiate(deathEffect, thePlayer.transform.position, thePlayer.transform.rotation);
-        }
-
+        Time.timeScale = deathTimeScale;
         yield return new WaitForSeconds(waitToRespawn);
+        Time.timeScale = 1f;
+        thePlayer.SetActive(false);
+        // if (deathEffect != null) {
+        //     Instantiate(deathEffect, thePlayer.transform.position, thePlayer.transform.rotation);
+        // }
 
+        // yield return new WaitForSeconds(waitToRespawn/2);
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         thePlayer.transform.position = respawnPoint;
         thePlayer.SetActive(true);
+        thePlayer.GetComponent<PlayerControllerInterface>().revivePlayer();
         PlayerHealthController.instance.FillHealth();
+        thePlayer.GetComponent<PlayerControllerInterface>().setAnimationTrigger("isUp");
+        
     }
 }
