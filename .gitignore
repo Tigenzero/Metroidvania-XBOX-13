@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Temp
+/obj
+/Metroidvania.sln
+/Logs
+/Library
+/ignore.conf
+/hidden_changes.conf
+/Assets
+/Assembly-CSharp.csproj
+/.vsconfig
+/.vs
+/.plastic

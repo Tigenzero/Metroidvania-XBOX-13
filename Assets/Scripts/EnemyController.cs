@@ -14,9 +14,14 @@ public class EnemyController : MonoBehaviour
     Transform CastPos;
 
     [SerializeField]
+    Transform CastPosleft;
+
+    [SerializeField]
     float MoveSpeed;
 
     Rigidbody2D Rb;
+
+    bool isfacingleft;
 
     // Start is called before the first frame update
     void Start()
@@ -48,12 +53,14 @@ public class EnemyController : MonoBehaviour
         {
             Rb.velocity = new Vector2(MoveSpeed, 0);
             transform.localScale = new Vector2(1, 1);
+            isfacingleft = false;
         }
         else
         // If to the right of player move left
         {
             Rb.velocity = new Vector2(-MoveSpeed, 0);
             transform.localScale = new Vector2(-1, 1);
+            isfacingleft = true;
         }
     }
 
@@ -66,12 +73,15 @@ public class EnemyController : MonoBehaviour
     {
         bool sight = false;
         float castDist = Distance;
-        Vector2 endPos = CastPos.position + Vector3.right * Distance;
+        //Vector2 endPos = CastPos.position + Vector3.right * castDist;
+        Vector2 endPosL = CastPosleft.position + Vector3.left * castDist;
+       
 
-        RaycastHit2D hit = Physics2D.Linecast(CastPos.position, endPos, 1 << LayerMask.NameToLayer("Player"));
-        if(hit.collider != null)
+        //RaycastHit2D hit = Physics2D.Linecast(CastPos.position, endPos, 1 << LayerMask.NameToLayer("Player"));
+        RaycastHit2D hitleft = Physics2D.Linecast(CastPosleft.position, endPosL, 1 << LayerMask.NameToLayer("Player"));
+        if ( hitleft.collider !=null)
         {
-            if (hit.collider.gameObject.CompareTag("Player"))
+            if ( hitleft.collider.gameObject.CompareTag("Player"))
             {
                 // If the raycast hits the player chase otherwise do nothing
                 sight = true;
@@ -79,13 +89,19 @@ public class EnemyController : MonoBehaviour
             else
             {
                 sight = false;
-                Debug.DrawLine(CastPos.position, endPos, Color.green);
+                
             }
-         
-            Debug.DrawLine(CastPos.position, endPos, Color.green);
+            Debug.DrawLine(CastPos.position, hitleft.point, Color.red);
+
         }
+        else
+        {
+            Debug.DrawLine(CastPos.position, endPosL, Color.green);
+        }
+        Debug.DrawLine(CastPos.position, endPosL, Color.green);
         return sight;
     }
    
 
+    
 }
