@@ -41,9 +41,19 @@ public class RushPlayerController : MonoBehaviour, PlayerControllerInterface
     public float shootTime;
     private float shootCounter;
 
+    // ducking/sliding
+    public float slideDeadZone;
+    public float slideSlowDown;
+
     public bool canMove;
 
-    public GameObject standing;
+    private bool isDucking;
+
+    public Animator duckingAnim;
+
+    public Animator slidingAnim;
+
+    public GameObject standing, sliding, ducking;
 
     // Start is called before the first frame update
     void Start()
@@ -68,7 +78,7 @@ public class RushPlayerController : MonoBehaviour, PlayerControllerInterface
 
         // If the player isn't dashing, attacking, or busy being hurt, the character can be moved.
         // if (!updateDash() && !updateAttacking() && !updatePlayerHurt())
-        if (!updatePlayerHurt() && !updateShooting())
+        if (!updatePlayerHurt() && !updateShooting() && !updateSlide())
         {
             moveCharacter(Input.GetAxisRaw("Horizontal"));
         }
@@ -91,6 +101,7 @@ public class RushPlayerController : MonoBehaviour, PlayerControllerInterface
         {
             jump();
             shoot();
+            duckAndSlide();
             // attack();
         }
 
@@ -101,6 +112,7 @@ public class RushPlayerController : MonoBehaviour, PlayerControllerInterface
             anim.SetBool("isOnGround", isOnGround);
             anim.SetFloat("speedHoriz", Mathf.Abs(theRB.velocity.x));
             anim.SetFloat("speedVert", theRB.velocity.y);
+            anim.SetBool("isDucking", isDucking);
         }
     }
 
@@ -120,9 +132,47 @@ public class RushPlayerController : MonoBehaviour, PlayerControllerInterface
         }
     }
 
+    private void duckAndSlide()
+    {
+        if (Input.GetAxisRaw("Vertical") < -.9f && isOnGround) // Mathf.Abs(theRB.velocity.y) < 0.4)
+        {
+            isDucking = true;
+        }
+        else
+        {
+            isDucking = false;
+        }
+    }
+
+    private bool updateSlide() {
+        if (!isDucking) {
+            ducking.SetActive(false);
+            standing.SetActive(true);
+            sliding.SetActive(false);
+            return false;
+        }
+        if (Mathf.Abs(theRB.velocity.x) > slideDeadZone) {
+            theRB.velocity = new Vector2(theRB.velocity.x*(1-slideSlowDown), theRB.velocity.y*2);
+            ducking.SetActive(false);
+            standing.SetActive(false);
+            sliding.SetActive(true);
+        } else {
+            theRB.velocity = new Vector2(0, 0);
+            if (!ducking.activeSelf) {
+                ducking.SetActive(true);
+                standing.SetActive(false);
+                sliding.SetActive(false);
+            }
+        }
+        return true;
+    }
+
 
     private void jump()
     {
+        if (sliding.activeSelf || ducking.activeSelf) {
+            return;
+        }
         // Jumping 
         // was the "jump" button pressed, the character was on the ground, or can double jump?
         if (hasJumpedRecently() && (hasTouchedGroundRecently() || (canDoubleJump && abilities.canDoubleJump))) // && attackCounter == 0)

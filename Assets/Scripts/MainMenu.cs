@@ -9,6 +9,8 @@ public class MainMenu : MonoBehaviour
 
     public string newGameScene;
 
+    public string devLevelScene;
+
     public GameObject continueButton;
 
     public PlayerAbilityTracker player;
@@ -27,6 +29,13 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.DeleteAll();
 
         SceneManager.LoadScene(newGameScene);
+    }
+
+    public void DevGame(){
+        // Deletes Progress
+        PlayerPrefs.DeleteAll();
+
+        SceneManager.LoadScene(devLevelScene);
     }
 
     public void Continue() {
