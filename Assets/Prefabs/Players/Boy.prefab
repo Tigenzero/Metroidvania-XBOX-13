@@ -360,6 +360,8 @@ MonoBehaviour:
   anim: {fileID: 675858543572929899}
   theSR: {fileID: 675858543572929898}
   hurtTime: 0.5
+  pushBackX: 15
+  pushBackY: 15
   shotToFire: {fileID: 5713118339078809288, guid: 63dd7130a008d4af5aa427504df3fc71, type: 3}
   ShotPoint: {fileID: 675858543099326330}
   shootTime: 0.5

@@ -33,6 +33,10 @@ public class RushPlayerController : MonoBehaviour, PlayerControllerInterface
 
     private bool isDead;
 
+    public float pushBackX;
+
+    public float pushBackY;
+
     // Shooting
 
     public BulletController shotToFire;
@@ -229,7 +233,8 @@ public class RushPlayerController : MonoBehaviour, PlayerControllerInterface
     {
         anim.SetTrigger("isHurt");
         hurtCounter = hurtTime;
-        theRB.velocity = Vector2.zero;
+        // theRB.velocity = Vector2.zero;
+        theRB.velocity = new Vector2(-(transform.localScale.x * pushBackX),  pushBackY);
     }
 
     bool isPlayerHurt()

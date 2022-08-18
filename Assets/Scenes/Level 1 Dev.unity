@@ -732,14 +732,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Respawn Controller
       objectReference: {fileID: 0}
-    - target: {fileID: 2489420338628069165, guid: 6ed8f5a9fea483143bb521ffef8658f9, type: 3}
-      propertyPath: waitToRespawn
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2489420338628069165, guid: 6ed8f5a9fea483143bb521ffef8658f9, type: 3}
-      propertyPath: deathTimeScale
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 2489420338628069166, guid: 6ed8f5a9fea483143bb521ffef8658f9, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -35739,21 +35731,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boy
       objectReference: {fileID: 0}
-    - target: {fileID: 675858544292749402, guid: f9b8409494411ef4f9b3268bae74c0c2, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 675858544292749407, guid: f9b8409494411ef4f9b3268bae74c0c2, type: 3}
       propertyPath: m_RootOrder
       value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 675858544292749407, guid: f9b8409494411ef4f9b3268bae74c0c2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.17
       objectReference: {fileID: 0}
     - target: {fileID: 675858544292749407, guid: f9b8409494411ef4f9b3268bae74c0c2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.5
+      value: -4.44
       objectReference: {fileID: 0}
     - target: {fileID: 675858544292749407, guid: f9b8409494411ef4f9b3268bae74c0c2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -35810,7 +35798,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4894814171304559831, guid: 1aebf7d738fb0c244874523966fc49ce, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.42
       objectReference: {fileID: 0}
     - target: {fileID: 4894814171304559831, guid: 1aebf7d738fb0c244874523966fc49ce, type: 3}
       propertyPath: m_LocalPosition.y
@@ -35857,10 +35845,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2076761623161226128, guid: bf7c61e0a4384a74695c5b0ee5c5b7b5, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 8eb0bd8e831c97a4b97b003e2d86fddb, type: 2}
     - target: {fileID: 2076761623356725073, guid: bf7c61e0a4384a74695c5b0ee5c5b7b5, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -35908,10 +35892,6 @@ PrefabInstance:
     - target: {fileID: 2076761623356725075, guid: bf7c61e0a4384a74695c5b0ee5c5b7b5, type: 3}
       propertyPath: m_Name
       value: Heroine
-      objectReference: {fileID: 0}
-    - target: {fileID: 2076761623356725075, guid: bf7c61e0a4384a74695c5b0ee5c5b7b5, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf7c61e0a4384a74695c5b0ee5c5b7b5, type: 3}
