@@ -21,6 +21,8 @@ public class RushPlayerController : MonoBehaviour, PlayerControllerInterface
     public LayerMask whatIsGround;
 
     public Animator anim;
+
+    public Animator duckAnim;
     public SpriteRenderer theSR;
 
     private PlayerAbilityTracker abilities;
@@ -41,6 +43,8 @@ public class RushPlayerController : MonoBehaviour, PlayerControllerInterface
 
     public BulletController shotToFire;
     public Transform ShotPoint;
+
+    public Transform DuckShotPoint;
 
     public float shootTime;
     private float shootCounter;
@@ -271,6 +275,12 @@ public class RushPlayerController : MonoBehaviour, PlayerControllerInterface
 
                 AudioManager.instance.PlaySFXAdjusted(14);
                 theRB.velocity = new Vector2(0, 0);
+            } else if (ducking.activeSelf && Mathf.Abs(theRB.velocity.y) < 0.1 && DuckShotPoint != null) {
+                Instantiate(shotToFire, DuckShotPoint.position, DuckShotPoint.rotation).moveDir = new Vector2(transform.localScale.x, 0f);
+                duckAnim.SetTrigger("shotFired");
+                shootCounter = shootTime;
+
+                AudioManager.instance.PlaySFXAdjusted(14);
             }
         }
     }
