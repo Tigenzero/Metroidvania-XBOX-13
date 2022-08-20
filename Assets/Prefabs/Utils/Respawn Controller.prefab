@@ -44,5 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 657c65e9464f4234299f4ce0ee8ddc6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitToRespawn: 2
+  waitToRespawn: 1
   deathEffect: {fileID: 58231628922189288, guid: 42833420282b48546a3c9894fd461f78, type: 3}
+  deathTimeScale: 0.5
