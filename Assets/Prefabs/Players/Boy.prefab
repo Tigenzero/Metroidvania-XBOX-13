@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 675858543572929897}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.06, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 675858544292749407}
@@ -181,7 +181,7 @@ Transform:
   m_GameObject: {fileID: 675858544199477434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.11, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 675858544292749407}
@@ -295,7 +295,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &675858544292749407
 Transform:
   m_ObjectHideFlags: 0
@@ -350,7 +350,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theRB: {fileID: 675858544292749406}
-  moveSpeed: 20
+  moveSpeed: 15
   jumpForce: 20
   groundPoint: {fileID: 675858544603384183}
   jumpButtonGracePeriod: 0.3
@@ -358,12 +358,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2112
   anim: {fileID: 675858543572929899}
+  duckAnim: {fileID: 0}
   theSR: {fileID: 675858543572929898}
   hurtTime: 0.5
   pushBackX: 15
   pushBackY: 15
   shotToFire: {fileID: 5713118339078809288, guid: 63dd7130a008d4af5aa427504df3fc71, type: 3}
   ShotPoint: {fileID: 675858543099326330}
+  DuckShotPoint: {fileID: 0}
   shootTime: 0.5
   slideDeadZone: 0.3
   slideSlowDown: 0.01
@@ -426,7 +428,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 0
-  anim: {fileID: 0}
+  anim: {fileID: 675858543572929899}
   dashSpeed: 0
   dashTime: 0
   theSR: {fileID: 0}
@@ -473,7 +475,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675858544603384182}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.438, z: 0}
+  m_LocalPosition: {x: 0, y: -1.93, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -508,7 +510,7 @@ Transform:
   m_GameObject: {fileID: 675858544774347925}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.91, y: -0.13, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 675858544292749407}
@@ -547,8 +549,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.38827118, y: -1.7148836}
-  m_Size: {x: 3.1139622, y: 1.5392725}
+  m_Offset: {x: 0.38827118, y: -1.8604261}
+  m_Size: {x: 3.1139624, y: 1.2481875}
   m_Direction: 1
 --- !u!212 &675858544774347927
 SpriteRenderer:
