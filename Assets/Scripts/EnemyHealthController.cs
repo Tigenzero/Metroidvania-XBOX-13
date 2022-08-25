@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHealthController : MonoBehaviour
+public class EnemyHealthController : MonoBehaviour, EnemyHealthInterface
 {
     public int totalHealth = 3;
 

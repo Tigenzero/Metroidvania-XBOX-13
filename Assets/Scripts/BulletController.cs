@@ -23,7 +23,7 @@ public class BulletController : MonoBehaviour
     {
         if (other.tag == "Enemy")
         {
-            other.GetComponent<EnemyHealthController>().DamageEnemy(damageAmount);
+            other.GetComponent<EnemyHealthInterface>().DamageEnemy(damageAmount);
         }
         if (impactEffect != null)
         {

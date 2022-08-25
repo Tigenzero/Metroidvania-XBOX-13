@@ -41304,6 +41304,63 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &5966233218520130186
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8445217840522038055, guid: d378e5a9eb46e8a40a8e52bd2746c9b7, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445217840522038055, guid: d378e5a9eb46e8a40a8e52bd2746c9b7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 145.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445217840522038055, guid: d378e5a9eb46e8a40a8e52bd2746c9b7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -48
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445217840522038055, guid: d378e5a9eb46e8a40a8e52bd2746c9b7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445217840522038055, guid: d378e5a9eb46e8a40a8e52bd2746c9b7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445217840522038055, guid: d378e5a9eb46e8a40a8e52bd2746c9b7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445217840522038055, guid: d378e5a9eb46e8a40a8e52bd2746c9b7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445217840522038055, guid: d378e5a9eb46e8a40a8e52bd2746c9b7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445217840522038055, guid: d378e5a9eb46e8a40a8e52bd2746c9b7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445217840522038055, guid: d378e5a9eb46e8a40a8e52bd2746c9b7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445217840522038055, guid: d378e5a9eb46e8a40a8e52bd2746c9b7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8445217840522038061, guid: d378e5a9eb46e8a40a8e52bd2746c9b7, type: 3}
+      propertyPath: m_Name
+      value: Ghost Wolf
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d378e5a9eb46e8a40a8e52bd2746c9b7, type: 3}
 --- !u!114 &8246909514956238592
 MonoBehaviour:
   m_ObjectHideFlags: 0

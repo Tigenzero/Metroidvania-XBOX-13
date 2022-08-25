@@ -42,7 +42,7 @@ public class BombController : MonoBehaviour
 
             Collider2D[] objectsToDamage = Physics2D.OverlapCircleAll(transform.position, blastRange, whatIsDamageable);
             foreach(Collider2D col in objectsToDamage) {
-                EnemyHealthController enemyHealth = col.GetComponent<EnemyHealthController>();
+                EnemyHealthInterface enemyHealth = col.GetComponent<EnemyHealthInterface>();
                 if(enemyHealth != null) {
                     enemyHealth.DamageEnemy(damageAmount);
                 }
