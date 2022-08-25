@@ -36,6 +36,8 @@ public class EnemyPatroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Am I on the Ground?
+        isOnGround = Physics2D.OverlapCircle(groundPoint.position, .2f, whatIsGround);
         if(Mathf.Abs(transform.position.x - patrolPoints[currentPoint].position.x) > .2f) {
             if(transform.position.x < patrolPoints[currentPoint].position.x)
             {
@@ -46,14 +48,14 @@ public class EnemyPatroller : MonoBehaviour
                 transform.localScale = Vector3.one;
             }
 
-            // Am I on the Ground?
-            isOnGround = Physics2D.OverlapCircle(groundPoint.position, .2f, whatIsGround);
-
 
             if (transform.position.y < patrolPoints[currentPoint].position.y - .5f  && isOnGround) {
                 theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
             }
         } else {
+            if (waitCounter == waitAtPoints) {
+                anim.SetTrigger("isTurning");
+            }
             theRB.velocity = new Vector2(0f, theRB.velocity.y);
             waitCounter -= Time.deltaTime;
             if(waitCounter <= 0) {
@@ -64,5 +66,7 @@ public class EnemyPatroller : MonoBehaviour
         }
 
         anim.SetFloat("speed", Mathf.Abs(theRB.velocity.x));
+        anim.SetBool("isOnGround", isOnGround);
+
     }
 }
