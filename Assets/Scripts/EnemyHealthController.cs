@@ -8,8 +8,14 @@ public class EnemyHealthController : MonoBehaviour, EnemyHealthInterface
 
     public GameObject deathEffect;
 
+    public Animator anim;
+
     public void DamageEnemy(int damageAmount){
         totalHealth -= damageAmount;
+
+        if (anim != null) {
+            anim.SetTrigger("isHurt");
+        }
 
         if(totalHealth <= 0) {
             if (deathEffect != null) {
