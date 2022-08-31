@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 
-public class Dialouge : MonoBehaviour
+public class RushUncleConvo : MonoBehaviour
 
 {
     [SerializeField]
@@ -17,11 +17,11 @@ public class Dialouge : MonoBehaviour
     [SerializeField]
     public GameObject EvilText;
 
-    [SerializeField]
-    public GameObject Image;
+    //[SerializeField]
+    //public GameObject Image;
 
-    [SerializeField]
-    public GameObject EImage;
+   // [SerializeField]
+    //public GameObject EImage;
 
     public static Dialouge instance;
 
@@ -31,15 +31,15 @@ public class Dialouge : MonoBehaviour
     public float textspeed;
 
     private int index;
-    
-    
+
+
 
     // Start is called before the first frame update
     public void StartDialog()
     {
         textComponent.text = string.Empty;
         Prime.SetActive(true);
-        
+
         StartDialogue();
     }
 
@@ -84,23 +84,23 @@ public class Dialouge : MonoBehaviour
             StartCoroutine(TypeLine());
             Debug.Log(+index);
 
-            if (index == 2 || index == 3)
+            if (index == 3|| index == 4 || index == 5|| index == 11)
             {
                 Debug.Log(+index);
                 Text.SetActive(true);
                 EvilText.SetActive(false);
-                Image.SetActive(true);
+                //Image.SetActive(true);
                 //EPanel.SetActive(false);
-                EImage.SetActive(false);
+                //EImage.SetActive(false);
             }
-            else if (index == 4 || index == 5 || index == 6 || index == 0 || index == 1)
+            else if (index == 0|| index == 1 || index == 2 || index == 6 || index == 7|| index == 8 || index == 9 || index ==10 ||index ==12 || index == 13  ||index == 14 ||index == 15 || index == 16  )
             {
                 Debug.Log(+index);
                 Text.SetActive(false);
                 EvilText.SetActive(true);
-                Image.SetActive(false);
+                //Image.SetActive(false);
                 //EPanel.SetActive(true);
-                EImage.SetActive(true);
+                //EImage.SetActive(true);
 
             }
         }
@@ -111,21 +111,5 @@ public class Dialouge : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-    public  void Awake()
-    {
-        {
-            if (instance == null)
-            {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
-
-    }
 }
-
 

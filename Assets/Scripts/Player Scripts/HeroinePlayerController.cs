@@ -316,4 +316,8 @@ public class HeroinePlayerController : MonoBehaviour, PlayerControllerInterface
     {
         anim.SetTrigger(trigger);
     }
+    public void Canmove(bool ans)
+    {
+        canMove = ans;
+    }
 }
